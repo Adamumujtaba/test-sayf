@@ -1,8 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import axios from "axios";
+export const baseUrl = "https://sayf-new.fly.dev/records";
+interface DataProps {
+  fullname: string;
+  _id: string;
+}
 
 function App() {
+  const [data, setData] = useState<null | DataProps[]>([]);
+  useEffect(() => {
+    axios
+      .get(baseUrl)
+      .then((response) => {
+        console.log(response.data.data);
+        setData(response.data.data);
+      })
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -10,14 +27,11 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <>
+          {data?.map((item) => {
+            return <p key={item._id}>{item.fullname}</p>;
+          })}
+        </>
       </header>
     </div>
   );
