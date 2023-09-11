@@ -1,8 +1,8 @@
 import { CheckCircleOutlined } from "@ant-design/icons";
 import Goals from "../../assets/goals.svg";
 import Task from "../../assets/task.svg";
-// import Members from "../../components/Members/index";
 import styled from "styled-components";
+import Members from "../../Components/Members";
 
 function Home() {
   return (
@@ -86,7 +86,9 @@ function Home() {
           </div>
         </div>
 
-        <div>{/* <Members /> */}</div>
+        <div>
+          <Members />
+        </div>
       </HomeDiv>
     </div>
   );

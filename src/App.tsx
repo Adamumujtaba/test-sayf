@@ -2,14 +2,26 @@ import React from "react";
 import "./App.css";
 import Navbar from "./Components/Navbar/Navbar";
 import Home from "./Pages/Home";
-export const baseUrl = "https://sayf-new.fly.dev/records";
+import { Route, Routes } from "react-router-dom";
+import Student from "./Pages/Students/indext";
+import Visit from "./Pages/Visit";
+import Footer from "./Components/Footer";
+import Committees from "./Pages/comittes/Committees";
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <Home />
-    </div>
+    <>
+      <>
+        <Navbar />
+        <Routes>
+          <Route path="/" Component={Home} />
+          <Route path="/students" Component={Student} />
+          <Route path="/committees" Component={Committees} />
+          <Route path="/ziyara" Component={Visit} />
+        </Routes>
+        <Footer />
+      </>
+    </>
   );
 }
 
