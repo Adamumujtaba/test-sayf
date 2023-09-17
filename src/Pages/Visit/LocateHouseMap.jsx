@@ -8,16 +8,14 @@ import { useLocation } from "react-router-dom";
 // import { useSelector } from "react-redux";
 
 function LocateHouseMap() {
-  const { state } = useLocation();
+  // const { state } = useLocation();
 
-  const currentRecord = localStorage.getItem("currentRecord");
-
+  const currentRecord = JSON.parse(localStorage.getItem("currentRecord"));
+  console.log(currentRecord);
   const [houseDetails, setHouseDetails] = useState(null);
   const houseGeoInfo = currentRecord?.geo?.split(",");
   const latitude = houseGeoInfo[0];
   const longitude = houseGeoInfo[1];
-
-  console.log("CURRENT RECORD: ", currentRecord);
 
   function Map() {
     return (
@@ -33,8 +31,8 @@ function LocateHouseMap() {
             setHouseDetails({
               lat: Number(latitude),
               lng: Number(longitude),
-              name: state.fullname,
-              address: state.address,
+              name: currentRecord.fullname,
+              address: currentRecord.address,
             });
           }}
         />

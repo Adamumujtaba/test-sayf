@@ -14,7 +14,7 @@ function VisitedMembers({ records, year, refetch, isLoading: isUpdating }) {
 
   const findAndNavigate = (data) => {
     // dispatch(setCurrentRecord(data));
-    localStorage.setItem("currentRecord", data);
+    localStorage.setItem("currentRecord", JSON.stringify(data));
     navigate("/map");
   };
 
