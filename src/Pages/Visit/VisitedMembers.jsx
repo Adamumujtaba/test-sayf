@@ -208,14 +208,6 @@ const Cont = styled.div`
     font-weight: 600;
     font-size: larger;
   }
-  .card-info p {
-    padding: 3px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-  }
   .title {
     position: absolute;
     right: 0px;
