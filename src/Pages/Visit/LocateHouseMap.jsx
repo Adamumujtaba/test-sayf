@@ -5,12 +5,12 @@ import withScriptjs from "react-google-maps/lib/withScriptjs";
 import withGoogleMap from "react-google-maps/lib/withGoogleMap";
 import { useLocation } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 function LocateHouseMap() {
   const { state } = useLocation();
 
-  const { currentRecord } = useSelector((state) => state.records);
+  const currentRecord = localStorage.getItem("currentRecord");
 
   const [houseDetails, setHouseDetails] = useState(null);
   const houseGeoInfo = currentRecord?.geo?.split(",");

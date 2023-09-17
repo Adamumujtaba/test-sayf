@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Modal } from "antd";
+import styled from "styled-components";
 
 function VisitedMembers({ records, year, refetch, isLoading: isUpdating }) {
   const list = records?.filter((item) => item.yr === year);
@@ -13,6 +14,7 @@ function VisitedMembers({ records, year, refetch, isLoading: isUpdating }) {
 
   const findAndNavigate = (data) => {
     // dispatch(setCurrentRecord(data));
+    localStorage.setItem("currentRecord", data);
     navigate("/map");
   };
 
@@ -66,7 +68,7 @@ function VisitedMembers({ records, year, refetch, isLoading: isUpdating }) {
     // dispatch(deleteRecordStart(payload));
   };
   return (
-    <>
+    <Cont>
       <div className="members">
         {list?.map((item) => {
           return (
@@ -153,8 +155,99 @@ function VisitedMembers({ records, year, refetch, isLoading: isUpdating }) {
           );
         })}
       </div>
-    </>
+    </Cont>
   );
 }
 
 export default VisitedMembers;
+
+const Cont = styled.div`
+  .members-header {
+    /* background: red; */
+    text-align: center;
+    padding: 20px;
+    margin: 20px 10px;
+    border-bottom: 1px solid #45137f;
+    font-size: 1.4rem;
+    /* margin: 15px 0px; */
+  }
+  /* background: grey; */
+  .members {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .card {
+    /* border: 1px solid #ccc; */
+    position: relative;
+    width: 330px;
+    height: 500px;
+    margin: 15px 10px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 3px;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  }
+  .card-img {
+    border-radius: 1px;
+    height: 85%;
+  }
+  .card-img img {
+    border-radius: 4px;
+  }
+  .card-info {
+    /* background: red; */
+    height: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .name {
+    font-weight: 600;
+    font-size: larger;
+  }
+  .card-info p {
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .title {
+    position: absolute;
+    right: 0px;
+    bottom: 0;
+    color: #fff;
+    /* background: #45137f; */
+    background: #03203c;
+    width: 140px;
+    text-align: center;
+    padding: 2px;
+    border-radius: 10px 0px 5px 0px;
+  }
+  .btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .btn button {
+    background: #000000;
+    color: #fff;
+    padding: 6px;
+    border: none;
+    border-radius: 4px;
+    width: 60px;
+    cursor: pointer;
+  }
+  .btn button:hover {
+    background: lightgray;
+    color: #000000;
+    border-radius: 0px;
+    transition: all 0.33s ease-in-out;
+    border: 1px solid #000000;
+  }
+`;

@@ -7,6 +7,7 @@ import Student from "./Pages/Students/indext";
 import Visit from "./Pages/Visit";
 import Footer from "./Components/Footer";
 import Committees from "./Pages/comittes/Committees";
+import LocateHouseMap from "./Pages/Visit/LocateHouseMap";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/students" Component={Student} />
           <Route path="/committees" Component={Committees} />
           <Route path="/ziyara" Component={Visit} />
+          <Route path="/map" Component={LocateHouseMap} />
         </Routes>
         <Footer />
       </>
