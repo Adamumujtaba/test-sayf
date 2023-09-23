@@ -1,41 +1,48 @@
 /* eslint-disable react/prop-types */
-import { FormikProvider, useFormik } from "formik";
-import * as YUP from "yup";
-import usePostData from "../../hooks/usePostData";
-import styled from "styled-components";
+import { FormikProvider, useFormik } from 'formik';
+import * as YUP from 'yup';
+import styled from 'styled-components';
+import { useAddStudentMutation } from '../../Pages/Students/student-api';
+import { useEffect } from 'react';
 
-function GradForm({ setModalIsOpen, refetch }) {
+function GradForm({ setIsModalOpen }) {
+  const [addStudent, { isSuccess, isLoading }] = useAddStudentMutation();
   const initialValues = {
-    fullname: "",
-    graduate: "",
-    dob: "",
-    course: "",
-    employed: "",
-    seeking: "",
+    fullname: '',
+    graduate: '',
+    dob: '',
+    course: '',
+    employed: '',
+    seeking: '',
     // student_id: _id,
   };
-
-  const { postData, error } = usePostData();
 
   const formik = useFormik({
     initialValues,
     validationSchema: YUP.object({
       fullname: YUP.string().required(),
       graduate: YUP.boolean().required(),
-      dob: YUP.date().required("Age is required"),
+      dob: YUP.date().required('Age is required'),
       course: YUP.string().required(),
       employed: YUP.boolean().required(),
     }),
     // validateOnMount: true,
     onSubmit: (val) => {
-      postData(val, refetch, setModalIsOpen);
+      addStudent(val);
+      // postData(val,  setModalIsOpen);
     },
   });
+
+  useEffect(() => {
+    if (isSuccess) {
+      setIsModalOpen(false);
+    }
+  }, [isSuccess, setIsModalOpen]);
 
   return (
     <FormikProvider value={formik}>
       <FormContainer>
-        <p style={{ color: "red" }}>{error && error}</p>
+        {/* <p style={{ color: 'red' }}>{error && error}</p> */}
         <div>
           <label htmlFor="fullname">
             Full name<span className="asterisk">*</span>
@@ -73,14 +80,14 @@ function GradForm({ setModalIsOpen, refetch }) {
             name="graduate"
             type="radio"
             value={true}
-          />{" "}
+          />{' '}
           Yes
           <input
             onChange={formik.handleChange}
             name="graduate"
             type="radio"
             value={false}
-          />{" "}
+          />{' '}
           No
           <p className="error">
             {formik.errors.graduate ? formik.errors.graduate : null}
@@ -109,20 +116,21 @@ function GradForm({ setModalIsOpen, refetch }) {
             name="employed"
             type="radio"
             value={true}
-          />{" "}
+          />{' '}
           Yes
           <input
             onChange={formik.handleChange}
             name="employed"
             type="radio"
             value={false}
-          />{" "}
+          />{' '}
           No
           <p className="error">
             {formik.errors.employed ? formik.errors.employed : null}
           </p>
         </div>
         <input
+          value={isLoading ? 'Uploading...' : 'Submit'}
           type="submit"
           onClick={() => {
             formik.handleSubmit(formik.values);
@@ -136,9 +144,9 @@ function GradForm({ setModalIsOpen, refetch }) {
 export default GradForm;
 
 export const FormContainer = styled.div`
-  input[type="text"],
-  [type="date"],
-  [type="submit"] {
+  input[type='text'],
+  [type='date'],
+  [type='submit'] {
     width: 100%;
     box-sizing: border-box;
     padding: 5px;
@@ -146,7 +154,7 @@ export const FormContainer = styled.div`
     border-radius: 3px;
     outline: none;
   }
-  input[type="radio"] {
+  input[type='radio'] {
     margin-left: 10px;
     outline: none;
   }
@@ -154,7 +162,7 @@ export const FormContainer = styled.div`
     color: red;
     text-align: right;
   }
-  input[type="submit"] {
+  input[type='submit'] {
     background: #6a42d9;
     color: #fff;
     border: none;

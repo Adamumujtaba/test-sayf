@@ -1,10 +1,11 @@
-import { notification } from "antd";
-import axios from "axios";
+import { notification } from 'antd';
+import axios from 'axios';
 // import env from "react-dotenv";
 // export const baseUrl = import.meta.env.VITE_API_BASE_URL;
 // export const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
-export const baseUrl = "https://sayf-new.fly.dev";
+// export const baseUrl = "https://sayf-new.fly.dev";
+export const baseUrl = 'http://localhost:3000';
 // const baseUrl = "https://sayf-new.fly.dev";
 
 export async function getAllUsers() {
@@ -15,11 +16,11 @@ export async function getAllUsers() {
 export async function handleSubmit(data) {
   const formData = new FormData();
   if (data?.file) {
-    formData.append("file", data?.file);
-    formData.append("fullname", data?.fullname);
-    formData.append("gender", data?.gender);
-    formData.append("phone", data?.phone);
-    formData.append("committee", data?.committee);
+    formData.append('file', data?.file);
+    formData.append('fullname', data?.fullname);
+    formData.append('gender', data?.gender);
+    formData.append('phone', data?.phone);
+    formData.append('committee', data?.committee);
   }
 
   try {
@@ -28,7 +29,7 @@ export async function handleSubmit(data) {
     if (response.data.success) {
       notification.success({
         message: response.data.msg,
-        style: { marginTop: "40px" },
+        style: { marginTop: '40px' },
       });
     }
     return response;
@@ -40,12 +41,12 @@ export async function handleSubmit(data) {
 export async function handleUpdatehttp(data) {
   const formData = new FormData();
   if (data?.file) {
-    formData.append("file", data?.file);
-    formData.append("fullname", data?.fullname);
-    formData.append("yr", data?.yr);
-    formData.append("phone", data?.phone);
-    formData.append("address", data?.address);
-    formData.append("geo", data?.geo);
+    formData.append('file', data?.file);
+    formData.append('fullname', data?.fullname);
+    formData.append('yr', data?.yr);
+    formData.append('phone', data?.phone);
+    formData.append('address', data?.address);
+    formData.append('geo', data?.geo);
   }
 
   try {

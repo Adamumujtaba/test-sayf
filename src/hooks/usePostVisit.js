@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState } from 'react';
 // import { handleSubmit } from "../services/contollers";
-import axios from "axios";
-import { baseUrl } from "../services/controller";
-import { notification } from "antd";
+import axios from 'axios';
+import { baseUrl } from '../services/controller';
+import { notification } from 'antd';
 
 const usePostVisit = () => {
   const [data, setData] = useState([]);
@@ -15,27 +15,28 @@ const usePostVisit = () => {
 
     const formData = new FormData();
     if (payload?.file) {
-      formData.append("file", payload?.file);
-      formData.append("name", payload?.name);
-      formData.append("geo", payload?.geo);
-      formData.append("phone", payload?.phone);
-      formData.append("address", payload?.address);
-      formData.append("yr", payload?.yr);
+      formData.append('file', payload?.file);
+      formData.append('name', payload?.name);
+      formData.append('geo', payload?.geo);
+      formData.append('phone', payload?.phone);
+      formData.append('address', payload?.address);
+      formData.append('yr', payload?.yr);
     }
 
+    console.log('FormDAta', formData);
     try {
-      const response = await axios.post(`${baseUrl}/ziyara`, formData);
+      const response = await axios.post(`${baseUrl}/records`, formData);
       setData(response);
       if (response.data.success) {
         setIsModalOpen(false);
         refetch();
         notification.success({
           message: response.data.msg,
-          style: { marginTop: "40px" },
+          style: { marginTop: '40px' },
         });
       }
       if (!response.status === 200) {
-        throw new Error("An error occurred while posting the data.");
+        throw new Error('An error occurred while posting the data.');
       }
       return response;
     } catch (error) {
@@ -52,12 +53,12 @@ const usePostVisit = () => {
 
     const formData = new FormData();
     if (data) {
-      formData.append("file", payload?.file);
-      formData.append("name", payload?.name);
-      formData.append("geo", payload?.geo);
-      formData.append("phone", payload?.phone);
-      formData.append("address", payload?.address);
-      formData.append("yr", payload?.yr);
+      formData.append('file', payload?.file);
+      formData.append('fullname', payload?.name);
+      formData.append('geo', payload?.geo);
+      formData.append('phone', payload?.phone);
+      formData.append('address', payload?.address);
+      formData.append('yr', payload?.yr);
     }
 
     try {
@@ -72,11 +73,11 @@ const usePostVisit = () => {
         refetch();
         notification.success({
           message: response.data.msg,
-          style: { marginTop: "40px" },
+          style: { marginTop: '40px' },
         });
       }
       if (!response.status === 200) {
-        throw new Error("An error occurred while posting the data.");
+        throw new Error('An error occurred while posting the data.');
       }
       return response;
     } catch (error) {

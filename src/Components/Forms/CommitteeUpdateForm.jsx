@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useState } from 'react';
 
-import { FormikProvider, useFormik } from "formik";
+import { FormikProvider, useFormik } from 'formik';
 
-import * as YUP from "yup";
-import usePostFormData from "../../hooks/usePostFormData";
-import { styled } from "styled-components";
+import * as YUP from 'yup';
+import usePostFormData from '../../hooks/usePostFormData';
+import { styled } from 'styled-components';
 function CommitteeUpdateForm({
   refetch,
   initialValues,
@@ -15,7 +15,7 @@ function CommitteeUpdateForm({
   const [image, setImage] = useState(null);
   const { putData, isLoading } = usePostFormData();
   const formik = useFormik({
-    initialValues: { ...initialValues, file: "" },
+    initialValues: { ...initialValues, file: '' },
     // enableReinitialize: true,
     validateOnMount: !true,
     validationSchema: YUP.object({
@@ -39,7 +39,7 @@ function CommitteeUpdateForm({
   const handleImageChange = async (e) => {
     let file = e.target.files[0];
     // const base64 = await covertBase64(file);
-    formik.setFieldValue("file", file);
+    formik.setFieldValue('file', file);
 
     if (file) {
       const reader = new FileReader();
@@ -59,14 +59,14 @@ function CommitteeUpdateForm({
       <main>
         <FormikProvider value={formik}>
           <FormContainer>
-            <div className={"signUpForm"}>
+            <div className={'signUpForm'}>
               <div>
                 <input
                   placeholder="Full name"
                   name="fullname"
                   type="text"
                   value={formik.values.fullname}
-                  {...formik.getFieldProps("fullname")}
+                  {...formik.getFieldProps('fullname')}
                 />
                 <p className="error">
                   {formik.errors.fullname ? formik.errors.fullname : null}
@@ -82,10 +82,10 @@ function CommitteeUpdateForm({
                   name="committee"
                   onChange={formik.handleChange}
                   value={formik.values.committee}>
-                  <option value={""}>Select Committee</option>
-                  <option value={"financial"}>Financial</option>
-                  <option value={"education"}>Education</option>
-                  <option value={"accounting"}>Accounting</option>
+                  <option value={''}>Select Committee</option>
+                  <option value={'financial'}>Financial</option>
+                  <option value={'education'}>Education</option>
+                  <option value={'accounting'}>Accounting</option>
                 </select>
                 <p className="error">
                   {formik.errors.committee ? formik.errors.committee : null}
@@ -98,19 +98,19 @@ function CommitteeUpdateForm({
                   name="phone"
                   type="tel"
                   value={formik.values.phone}
-                  {...formik.getFieldProps("phone")}
+                  {...formik.getFieldProps('phone')}
                 />
                 <p className="error">
                   {formik.errors.phone ? formik.errors.phone : null}
                 </p>
               </div>
               <div>
-                <span style={{ fontSize: "1.1rem", paddingRight: "8px" }}>
+                <span style={{ fontSize: '1.1rem', paddingRight: '8px' }}>
                   Gender
                 </span>
                 <input
                   onChange={(e) => {
-                    formik.setFieldValue("gender", e.target.value);
+                    formik.setFieldValue('gender', e.target.value);
                   }}
                   placeholder="gender"
                   name="gender"
@@ -120,14 +120,14 @@ function CommitteeUpdateForm({
                   // checked={initialValues.married === true}
                 />
                 <label htmlFor="yes">
-                  <span style={{ fontSize: "1.1rem", padding: "2px" }}>
+                  <span style={{ fontSize: '1.1rem', padding: '2px' }}>
                     Male
                   </span>
                 </label>
                 <input
-                  style={{ marginLeft: ".70rem" }}
+                  style={{ marginLeft: '.70rem' }}
                   onChange={(e) => {
-                    formik.setFieldValue("gender", e.target.value);
+                    formik.setFieldValue('gender', e.target.value);
                   }}
                   name="gender"
                   type="radio"
@@ -136,7 +136,7 @@ function CommitteeUpdateForm({
                   value={false}
                 />
                 <label htmlFor="no">
-                  <span style={{ fontSize: "1.1rem", paddingLeft: "2px" }}>
+                  <span style={{ fontSize: '1.1rem', paddingLeft: '2px' }}>
                     Female
                   </span>
                 </label>
@@ -158,12 +158,12 @@ function CommitteeUpdateForm({
               </div>
               {!image && (
                 <div className="div-image">
-                  <img src={initialValues.imgUrl} width={"100%"} />
+                  <img src={initialValues.imgUrl} alt={'img'} width={'100%'} />
                 </div>
               )}
               {image && (
                 <div className="div-image">
-                  <img src={image} width={"100%"} />
+                  <img src={image} width={'100%'} alt={'img'} />
                 </div>
               )}
 
@@ -174,14 +174,14 @@ function CommitteeUpdateForm({
                   // formik.handleSubmit();
                 }}
                 style={{
-                  color: "#fff",
+                  color: '#fff',
                   background: !(formik.dirty && formik.isValid)
-                    ? "lightgrey"
-                    : "#1358c8",
+                    ? 'lightgrey'
+                    : '#1358c8',
                 }}
                 disabled={!(formik.dirty && formik.isValid)}>
-                {" "}
-                {isLoading ? "Updating..." : "Update"}
+                {' '}
+                {isLoading ? 'Updating...' : 'Update'}
               </button>
             </div>
           </FormContainer>
@@ -194,11 +194,11 @@ function CommitteeUpdateForm({
 export default CommitteeUpdateForm;
 
 export const FormContainer = styled.div`
-  input[type="text"],
-  [type="date"],
-  [type="tel"],
-  [type="submit"],
-  [type="file"] {
+  input[type='text'],
+  [type='date'],
+  [type='tel'],
+  [type='submit'],
+  [type='file'] {
     width: 100%;
     box-sizing: border-box;
     padding: 5px;
@@ -219,7 +219,7 @@ export const FormContainer = styled.div`
     position: absolute;
     top: 20px;
   }
-  input[type="radio"] {
+  input[type='radio'] {
     margin-left: 10px;
     outline: none;
   }
@@ -227,7 +227,7 @@ export const FormContainer = styled.div`
     color: red;
     text-align: right;
   }
-  input[type="submit"] {
+  input[type='submit'] {
     background: #6a42d9;
     color: #fff;
     border: none;

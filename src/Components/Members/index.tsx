@@ -1,5 +1,5 @@
-import { styled } from "styled-components";
-import Records from "./MemData";
+import { styled } from 'styled-components';
+import Records from './MemData';
 
 function Members() {
   return (
@@ -12,12 +12,7 @@ function Members() {
           return (
             <div key={index} className="card">
               <div className="card-img">
-                <img
-                  src={item.img}
-                  alt="image"
-                  width={"100%"}
-                  height={"100%"}
-                />
+                <img src={item.img} alt="img" width={'100%'} height={'100%'} />
               </div>
               <div className="card-info">
                 <p className="name">{item.name}</p>

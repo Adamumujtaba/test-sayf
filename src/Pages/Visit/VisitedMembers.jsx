@@ -1,30 +1,29 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { Modal } from "antd";
-import styled from "styled-components";
+import { Modal, notification } from 'antd';
+import styled from 'styled-components';
+import { useDeleteRecordMutation, useUpdateRecordMutation } from './visit-api';
+import { LoadingOutlined } from '@ant-design/icons';
 
-function VisitedMembers({ records, year, refetch, isLoading: isUpdating }) {
-  const list = records?.filter((item) => item.yr === year);
-  // const dispatch = useDispatch();
+function VisitedMembers({ records }) {
   const navigate = useNavigate();
-  // const { isUpdating } = useSelector((state) => state.records);
-
+  const [deleteRecord, { isLoading, isError, isSuccess }] =
+    useDeleteRecordMutation();
+  const [updateRecord] = useUpdateRecordMutation();
   const findAndNavigate = (data) => {
-    // dispatch(setCurrentRecord(data));
-    localStorage.setItem("currentRecord", JSON.stringify(data));
-    navigate("/map");
+    localStorage.setItem('currentRecord', JSON.stringify(data));
+    navigate('/map');
   };
 
   const [data, setData] = useState({
-    fullname: "",
-    geo: "",
-    phone: "",
-    address: "",
-    file: "",
-    yr: "",
+    fullname: '',
+    geo: '',
+    phone: '',
+    address: '',
+    file: '',
+    yr: '',
   });
   const handleOk = () => {
     setIsModalOpen(false);
@@ -46,31 +45,32 @@ function VisitedMembers({ records, year, refetch, isLoading: isUpdating }) {
     // }
   };
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    let payload = {
-      data: data,
-      callback: () => {
-        refetch();
-        setIsModalOpen(false);
-      },
-    };
-    // dispatch(updateRecordStart(payload));
+  useEffect(() => {
+    if (isSuccess) {
+      notification.success({
+        message: 'Record Deleted Successfully',
+        style: { marginTop: '45px' },
+      });
+    }
+    if (isError) {
+      notification.error({
+        message: 'Fail Delete',
+        style: { marginTop: '45px' },
+      });
+    }
+  }, [isSuccess, isError]);
+
+  const handleUpdate = (data) => {
+    updateRecord(data);
   };
   const handleDelete = (id) => {
-    let payload = {
-      data: id,
-      callback: () => {
-        refetch();
-        setIsModalOpen(false);
-      },
-    };
-    // dispatch(deleteRecordStart(payload));
+    deleteRecord(id);
   };
+
   return (
     <Cont>
       <div className="members">
-        {list?.map((item) => {
+        {records?.map((item) => {
           return (
             <React.Fragment key={item._id}>
               <div className="card">
@@ -78,8 +78,8 @@ function VisitedMembers({ records, year, refetch, isLoading: isUpdating }) {
                   <img
                     src={item.imgUrl}
                     alt="img"
-                    width={"100%"}
-                    height={"100%"}
+                    width={'100%'}
+                    height={'100%'}
                   />
                 </div>
                 <div className="card-info">
@@ -94,8 +94,7 @@ function VisitedMembers({ records, year, refetch, isLoading: isUpdating }) {
                       Edit
                     </button>
                     <button onClick={() => handleDelete(item._id)}>
-                      {" "}
-                      Delete
+                      {isLoading ? <LoadingOutlined /> : 'Delete'}
                     </button>
                     <button
                       onClick={() => {
@@ -108,11 +107,12 @@ function VisitedMembers({ records, year, refetch, isLoading: isUpdating }) {
               </div>
 
               <Modal
-                title={isUpdating ? "Updating..." : "Update Record"}
+                // title={isUpdating ? 'Updating...' : 'Update Record'}
+                title={'Updating...'}
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}>
-                <form className="form" onSubmit={(e) => handleUpdate(e)}>
+                <div className="form">
                   <input
                     type="text"
                     value={data.fullname}
@@ -148,8 +148,12 @@ function VisitedMembers({ records, year, refetch, isLoading: isUpdating }) {
                     }
                     placeholder="address"></textarea>
                   <input onChange={(e) => handleImageChange(e)} type="file" />
-                  <input type="submit" value="Update" />
-                </form>
+                  <input
+                    type="submit"
+                    value="Update"
+                    onClick={() => handleUpdate(data)}
+                  />
+                </div>
               </Modal>
             </React.Fragment>
           );
