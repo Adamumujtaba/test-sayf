@@ -1,23 +1,26 @@
 /* eslint-disable react/prop-types */
-import { FormikProvider, useFormik } from "formik";
-import { useState } from "react";
-import * as YUP from "yup";
-import usePostFormData from "../../hooks/usePostFormData";
-import { styled } from "styled-components";
+import { FormikProvider, useFormik } from 'formik';
+import { useEffect, useState } from 'react';
+import * as YUP from 'yup';
+// import usePostFormData from '../../hooks/usePostFormData';
+import { styled } from 'styled-components';
+import { useAddCommitteeMutation } from '../../Pages/comittes/Committee-api';
 
-function CommitteeForm({ setIsModalOpen, refetch }) {
+function CommitteeForm({ setIsOpen, isOpen }) {
   const [image, setImage] = useState();
-  const { isLoading, error, postData } = usePostFormData();
+  // const { error, postData } = usePost;
+  const [addCommittee, { isLoading, error, isSuccess }] =
+    useAddCommitteeMutation();
   const initialValues = {
-    fullname: "",
-    phone: "",
-    gender: "",
-    committee: "",
-    file: "",
+    fullname: '',
+    phone: '',
+    gender: '',
+    committee: '',
+    file: '',
   };
   const handleImageChange = async (e) => {
     let file = e.target.files[0];
-    formik.setFieldValue("file", file);
+    formik.setFieldValue('file', file);
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
@@ -35,12 +38,19 @@ function CommitteeForm({ setIsModalOpen, refetch }) {
       gender: YUP.boolean().required(),
       file: YUP.string().required(),
     }),
-    validateOnMount: true,
+    // validateOnMount: true,
   });
 
   async function onSubmit() {
-    postData(formik.values, refetch, setIsModalOpen);
+    // postData(formik.values, refetch, setIsModalOpen);
+    // postData(formik.values, setIsModalOpen);
+    addCommittee(formik.values);
   }
+  useEffect(() => {
+    if (isSuccess) {
+      setIsOpen(false);
+    }
+  }, [isSuccess, isOpen, setIsOpen]);
 
   return (
     <div>
@@ -70,10 +80,10 @@ function CommitteeForm({ setIsModalOpen, refetch }) {
                 id="committee"
                 name="committee"
                 onChange={formik.handleChange}>
-                <option value={""}>Select Committee</option>
-                <option value={"financial"}>Financial</option>
-                <option value={"education"}>Education</option>
-                <option value={"accounting"}>Accounting</option>
+                <option value={''}>Select Committee</option>
+                <option value={'financial'}>Financial</option>
+                <option value={'education'}>Education</option>
+                <option value={'accounting'}>Accounting</option>
               </select>
               <p className="error">
                 {formik.errors.committee ? formik.errors.committee : null}
@@ -100,14 +110,14 @@ function CommitteeForm({ setIsModalOpen, refetch }) {
                 name="gender"
                 type="radio"
                 value={true}
-              />{" "}
+              />{' '}
               Male
               <input
                 onChange={formik.handleChange}
                 name="gender"
                 type="radio"
                 value={false}
-              />{" "}
+              />{' '}
               Female
               <p className="error">
                 {formik.errors.gender ? formik.errors.gender : null}
@@ -124,12 +134,12 @@ function CommitteeForm({ setIsModalOpen, refetch }) {
             </div>
             <input
               type="submit"
-              value={isLoading ? "Uploading..." : "Submit"}
+              value={isLoading ? 'Uploading...' : 'Submit'}
               id=""
               style={{
                 background: !(formik.dirty && formik.isValid)
-                  ? "lightgrey"
-                  : "#1358c8",
+                  ? 'lightgrey'
+                  : '#1358c8',
               }}
               disabled={!(formik.dirty && formik.isValid)}
               onClick={() => {
@@ -146,11 +156,11 @@ function CommitteeForm({ setIsModalOpen, refetch }) {
 export default CommitteeForm;
 
 export const FormContainer = styled.div`
-  input[type="text"],
-  [type="date"],
-  [type="tel"],
-  [type="submit"],
-  [type="file"] {
+  input[type='text'],
+  [type='date'],
+  [type='tel'],
+  [type='submit'],
+  [type='file'] {
     width: 100%;
     box-sizing: border-box;
     padding: 5px;
@@ -171,15 +181,16 @@ export const FormContainer = styled.div`
     position: absolute;
     top: 20px;
   }
-  input[type="radio"] {
+  input[type='radio'] {
     margin-left: 10px;
     outline: none;
+    width: 5%;
   }
   .error {
     color: red;
     text-align: right;
   }
-  input[type="submit"] {
+  input[type='submit'] {
     background: #6a42d9;
     color: #fff;
     border: none;

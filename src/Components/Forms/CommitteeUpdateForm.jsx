@@ -6,12 +6,7 @@ import { FormikProvider, useFormik } from 'formik';
 import * as YUP from 'yup';
 import usePostFormData from '../../hooks/usePostFormData';
 import { styled } from 'styled-components';
-function CommitteeUpdateForm({
-  refetch,
-  initialValues,
-  setIsModalOpen,
-  isModalOpen,
-}) {
+function CommitteeUpdateForm({ initialValues, setIsModalOpen, isModalOpen }) {
   const [image, setImage] = useState(null);
   const { putData, isLoading } = usePostFormData();
   const formik = useFormik({
@@ -25,13 +20,13 @@ function CommitteeUpdateForm({
       gender: YUP.boolean().required(),
     }),
     onSubmit: (val) => {
-      let payloads = {
-        data: val,
-        callback: () => {
-          refetch();
-          setIsModalOpen({ ...isModalOpen, update: false });
-        },
-      };
+      // let payloads = {
+      //   data: val,
+      //   callback: () => {
+      //     refetch();
+      //     setIsModalOpen({ ...isModalOpen, update: false });
+      //   },
+      // };
       // dispatch(updateRecordStart(payloads));
     },
   });
@@ -51,7 +46,7 @@ function CommitteeUpdateForm({
   };
 
   async function onSubmit() {
-    putData(formik.values, refetch, setIsModalOpen);
+    putData(formik.values, setIsModalOpen);
   }
   return (
     <div>

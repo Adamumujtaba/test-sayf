@@ -1,34 +1,39 @@
-import { useState } from "react";
-import { CommitteeCon } from "./committees.style";
-import CommitteeForm from "../../Components/Forms/CommitteeForm";
-import { Modal, Spin } from "antd";
-import useGetRecord from "../../hooks/useGetRecords";
-import CommitteeUpdateForm from "../../Components/Forms/CommitteeUpdateForm";
-import useDelete from "../../hooks/useDelete";
-import { commiteePros } from "../../constant";
+import { useState } from 'react';
+import { CommitteeCon } from './committees.style';
+import CommitteeForm from '../../Components/Forms/CommitteeForm';
+import { Modal, Spin } from 'antd';
+// import useGetRecord from '../../hooks/useGetRecords';
+import CommitteeUpdateForm from '../../Components/Forms/CommitteeUpdateForm';
+// import useDelete from '../../hooks/useDelete';
+import { commiteePros } from '../../constant';
+import { useCommitteeQuery, useDeleteCommitteeMutation } from './Committee-api';
 
 function Committees() {
-  const { data, refetch } = useGetRecord("committees");
-  const { deleteData, isDeleting } = useDelete();
+  const { data, isError } = useCommitteeQuery('');
+  const [deleteCommittee, { isLoading: isDeleting }] =
+    useDeleteCommitteeMutation();
+  const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState({
     create: false,
     update: false,
     data: {},
   });
-  const financial = data.filter(
-    (item: commiteePros) => item.committee.toLowerCase() === "financial"
+  const financial = data?.data?.filter(
+    (item: commiteePros) => item?.committee?.toLowerCase() === 'financial'
   );
-  const education = data.filter(
-    (item: commiteePros) => item.committee.toLowerCase() === "education"
+  const education = data?.data?.filter(
+    (item: commiteePros) => item?.committee?.toLowerCase() === 'education'
   );
+
+  if (isError) {
+    return <h2>Something went wrong</h2>;
+  }
 
   return (
     <CommitteeCon>
       <div className="header">
-        <h4>Committees</h4>
-        <button
-          className="add"
-          onClick={() => setIsModalOpen({ ...isModalOpen, create: true })}>
+        <h2>Committees</h2>
+        <button className="add" onClick={() => setIsOpen(true)}>
           Add
         </button>
       </div>
@@ -43,8 +48,8 @@ function Committees() {
                     <img
                       src={item.imgUrl}
                       alt="pic"
-                      width={"100%"}
-                      height={"100%"}
+                      width={'100%'}
+                      height={'100%'}
                     />
                   </div>
                   <div className="card-info">
@@ -65,10 +70,11 @@ function Committees() {
                     </button>
                     <button
                       onClick={() => {
-                        deleteData(item._id, refetch, setIsModalOpen);
+                        // deleteData(item._id, setIsModalOpen);
+                        deleteCommittee(item._id);
                       }}
-                      style={{ display: "flex", justifyContent: "center" }}>
-                      {isDeleting ? <Spin size="small" /> : "Delete"}
+                      style={{ display: 'flex', justifyContent: 'center' }}>
+                      {isDeleting ? <Spin size="small" /> : 'Delete'}
                     </button>
                   </div>
                 </div>
@@ -87,8 +93,8 @@ function Committees() {
                     <img
                       src={item.imgUrl}
                       alt="pic"
-                      width={"100%"}
-                      height={"100%"}
+                      width={'100%'}
+                      height={'100%'}
                     />
                   </div>
                   <div className="card-info">
@@ -98,7 +104,12 @@ function Committees() {
                   </div>
                   <div className="btn">
                     <button>Edit</button>
-                    <button>Delete</button>
+                    <button
+                      onClick={() => {
+                        deleteCommittee(item._id);
+                      }}>
+                      Delete
+                    </button>
                   </div>
                 </div>
               );
@@ -109,10 +120,10 @@ function Committees() {
       <>
         <Modal
           title="Add New Record"
-          open={isModalOpen.create}
-          onOk={() => setIsModalOpen({ ...isModalOpen, create: false })}
-          onCancel={() => setIsModalOpen({ ...isModalOpen, create: false })}>
-          <CommitteeForm refetch={refetch} setIsModalOpen={setIsModalOpen} />
+          open={isOpen}
+          onOk={() => setIsOpen(false)}
+          onCancel={() => setIsOpen(false)}>
+          <CommitteeForm isOpen={isOpen} setIsOpen={setIsOpen} />
         </Modal>
         <Modal
           title="Update Record"
@@ -120,7 +131,6 @@ function Committees() {
           onOk={() => setIsModalOpen({ ...isModalOpen, update: false })}
           onCancel={() => setIsModalOpen({ ...isModalOpen, update: false })}>
           <CommitteeUpdateForm
-            refetch={refetch}
             initialValues={isModalOpen.data}
             setIsModalOpen={setIsModalOpen}
             isModalOpen={isModalOpen}
