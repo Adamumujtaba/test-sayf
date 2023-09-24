@@ -13,20 +13,23 @@ function Committees() {
   const [deleteCommittee, { isLoading: isDeleting }] =
     useDeleteCommitteeMutation();
   const [isOpen, setIsOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState({
-    create: false,
-    update: false,
-    data: {},
-  });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [update, setUpdate] = useState({});
   const financial = data?.data?.filter(
     (item: commiteePros) => item?.committee?.toLowerCase() === 'financial'
   );
+
   const education = data?.data?.filter(
     (item: commiteePros) => item?.committee?.toLowerCase() === 'education'
   );
 
   if (isError) {
-    return <h2>Something went wrong</h2>;
+    return (
+      <div style={{ minHeight: '80vh' }}>
+        <h2 style={{ color: 'red' }}>Something went wrong</h2>
+      </div>
+    );
   }
 
   return (
@@ -59,13 +62,10 @@ function Committees() {
                   </div>
                   <div className="btn">
                     <button
-                      onClick={() =>
-                        setIsModalOpen({
-                          ...isModalOpen,
-                          update: true,
-                          data: item,
-                        })
-                      }>
+                      onClick={() => {
+                        setIsModalOpen(true);
+                        setUpdate(item);
+                      }}>
                       Edit
                     </button>
                     <button
@@ -127,11 +127,11 @@ function Committees() {
         </Modal>
         <Modal
           title="Update Record"
-          open={isModalOpen.update}
-          onOk={() => setIsModalOpen({ ...isModalOpen, update: false })}
-          onCancel={() => setIsModalOpen({ ...isModalOpen, update: false })}>
+          open={isModalOpen}
+          onOk={() => setIsModalOpen(false)}
+          onCancel={() => setIsModalOpen(false)}>
           <CommitteeUpdateForm
-            initialValues={isModalOpen.data}
+            initialValues={update}
             setIsModalOpen={setIsModalOpen}
             isModalOpen={isModalOpen}
           />

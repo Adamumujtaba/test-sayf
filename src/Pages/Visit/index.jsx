@@ -1,18 +1,11 @@
-import { Empty, Modal, notification } from 'antd';
+import { Empty, Modal } from 'antd';
 import { useEffect, useState } from 'react';
 import VisitedMembers from './VisitedMembers';
 import { useAddRecordMutation, useVisitRecordQuery } from './visit-api';
 function Visit() {
-  const { data: records, isLoading, isError, error } = useVisitRecordQuery();
-  const [
-    addRecord,
-    {
-      error: recordError,
-      isError: isRecordError,
-      isSuccess,
-      isLoading: isRecordLoading,
-    },
-  ] = useAddRecordMutation();
+  const { data: records, isLoading } = useVisitRecordQuery();
+  const [addRecord, { isSuccess, isLoading: isRecordLoading }] =
+    useAddRecordMutation();
   const [data, setData] = useState({
     name: '',
     geo: '',
@@ -41,26 +34,9 @@ function Visit() {
 
   useEffect(() => {
     if (isSuccess) {
-      notification.success({
-        message: 'Record Added Successfully',
-        style: { marginTop: '45px' },
-      });
       setIsModalOpen(false);
     }
-
-    if (isError && error) {
-      notification.error({
-        message: error?.data?.error,
-        style: { marginTop: '45px' },
-      });
-    }
-    if (isRecordError && recordError) {
-      notification.error({
-        message: recordError?.data?.error,
-        style: { marginTop: '45px' },
-      });
-    }
-  }, [isSuccess, isError, error, isRecordError, recordError]);
+  }, [isSuccess]);
   return (
     <div className="visit-container" style={{ minHeight: '70vh' }}>
       <div className="header">

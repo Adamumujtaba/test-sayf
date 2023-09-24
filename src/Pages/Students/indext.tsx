@@ -11,13 +11,20 @@ function Student() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data, error, isLoading } = useStudentsQuery('');
 
-  console.log(data);
   if (isLoading) {
-    return <Loader />;
+    return (
+      <div style={{ minHeight: '80vh' }}>
+        <Loader />
+      </div>
+    );
   }
 
   if (error) {
-    return <h2>Something went wrong...</h2>;
+    return (
+      <div style={{ minHeight: '80vh' }}>
+        <h2 style={{ color: 'red' }}>Something went wrong</h2>
+      </div>
+    );
   }
 
   return (

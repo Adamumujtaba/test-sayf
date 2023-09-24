@@ -1,16 +1,16 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
-
 import { FormikProvider, useFormik } from 'formik';
-
 import * as YUP from 'yup';
-import usePostFormData from '../../hooks/usePostFormData';
 import { styled } from 'styled-components';
+import { useUpdateCommitteeMutation } from '../../Pages/comittes/Committee-api';
 function CommitteeUpdateForm({ initialValues, setIsModalOpen, isModalOpen }) {
   const [image, setImage] = useState(null);
-  const { putData, isLoading } = usePostFormData();
+
+  const [updateCommittee, { isLoading }] = useUpdateCommitteeMutation();
+  console.log(initialValues);
   const formik = useFormik({
-    initialValues: { ...initialValues, file: '' },
+    initialValues: { initialValues },
     // enableReinitialize: true,
     validateOnMount: !true,
     validationSchema: YUP.object({
@@ -45,8 +45,14 @@ function CommitteeUpdateForm({ initialValues, setIsModalOpen, isModalOpen }) {
     }
   };
 
+  // notification.success({
+  //   message: response.data.msg,
+  //   style: { marginTop: "40px" },
+  // });
   async function onSubmit() {
-    putData(formik.values, setIsModalOpen);
+    // putData(formik.values, setIsModalOpen);
+    console.log(formik.values);
+    updateCommittee(formik.values);
   }
   return (
     <div>

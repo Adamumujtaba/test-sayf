@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { baseUrl } from '../../services/controller';
+import { notification } from 'antd';
 
 export interface Records {
   name: string;
@@ -40,6 +41,19 @@ export const visitApi = createApi({
         body: CovertToFormData(data),
       }),
       invalidatesTags: ['visit'],
+      async onQueryStarted(_, { queryFulfilled: qf }) {
+        qf.then(() => {
+          notification.success({
+            message: 'Record Added Successfully',
+            style: { marginTop: '45px' },
+          });
+        }).catch((error) => {
+          notification.error({
+            message: error.error.message,
+            style: { marginTop: '45px' },
+          });
+        });
+      },
     }),
     deleteRecord: builder.mutation({
       query: (id) => ({

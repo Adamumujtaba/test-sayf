@@ -1,8 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StdContainer = styled.div`
   width: 90%;
   margin: 0 auto;
+  min-height: 80vh;
   .add {
     margin: 5px;
     padding: 5px;

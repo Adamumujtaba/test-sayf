@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { baseUrl } from '../../services/controller';
+import { notification } from 'antd';
 
 export interface Props {
   fullname: string;
@@ -37,6 +38,27 @@ export const CommitteeApi = createApi({
         body: CovertToFormData(data),
       }),
       invalidatesTags: ['committees'],
+      async onQueryStarted(_, { queryFulfilled: qf }) {
+        qf.then(() => {
+          notification.success({
+            message: 'Record Added Successfully',
+            style: { marginTop: '45px' },
+          });
+        }).catch((error) => {
+          notification.error({
+            message: error.error.message,
+            style: { marginTop: '45px' },
+          });
+        });
+      },
+    }),
+    updateCommittee: builder.mutation({
+      query: (data) => ({
+        url: `/committees${data._id}`,
+        method: 'patch',
+        body: CovertToFormData(data),
+      }),
+      invalidatesTags: ['committees'],
     }),
     deleteCommittee: builder.mutation({
       query: (id) => ({
@@ -52,4 +74,5 @@ export const {
   useAddCommitteeMutation,
   useCommitteeQuery,
   useDeleteCommitteeMutation,
+  useUpdateCommitteeMutation,
 } = CommitteeApi;
