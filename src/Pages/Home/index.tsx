@@ -7,7 +7,7 @@ function Home() {
   return (
     <div>
       <div className="bg-[#000] min-h-full text-gray-light p-4">
-        <div className="flex items-center flex-col justify-center h-[50vh]">
+        <div className="flex items-center flex-col justify-center h-[50vh] ">
           <p className="text-[#00d094] font-bold">Online Academy.</p>
           <h2 className="text-2xl text-center font-boldtext-[#00d094] md:text-4xl  py-4 ">
             Sa'ad Ahmad Youth Foundation (SAYF){' '}
@@ -21,15 +21,15 @@ function Home() {
             </p> */}
         </div>
 
-        <div className="max-w-[1240px] mx-auto grid md:grid-cols-2 px-10 items-center">
-          <div className="mx-4">
+        <div className="max-w-[1240px] grid md:grid-cols-2 px-2 items-center">
+          <div className="mx-4 w-full  ">
             <img
               src={Goals}
               alt="goals"
               className="w-full h-full mx-auto my-4"
             />
           </div>
-          <div className="text-m md:text-xl mx-4">
+          <div className="w-full text-m text-justify md:text-xl md:mx-5 ">
             <h3 className="font-semibold mx-7 text-[#00d094]">
               Aims and Objectives
             </h3>
@@ -77,8 +77,8 @@ function Home() {
         </div>
       </div>
 
-      <div className="bg-[#efefef] max-w-[1240px] mx-auto grid md:grid-cols-2 px-10 items-center h-[80vh]">
-        <div className="p-2 mx-3 ">
+      <div className="bg-[#efefef] max-w-[1240px] mx-auto grid md:grid-cols-2 px-4 items-center h-[80vh]">
+        <div className="p-2 mx-3 w-[90%] text-justify">
           <h3 className="font-bold text-xl ">Mission</h3>
           <p className="text-l">
             The mission of Saad Ahmad Youth Foundation is to foster mutual
@@ -87,7 +87,7 @@ function Home() {
             entire family.
           </p>
         </div>
-        <div>
+        <div className="w-full">
           <img src={Task} alt="goals" width={'100%'} height={'100%'} />
         </div>
       </div>

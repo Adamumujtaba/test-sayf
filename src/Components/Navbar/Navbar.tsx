@@ -15,7 +15,6 @@ function Navbar() {
         </div>
       </div>
 
-      {/* <ul className={!isOpen ? 'navLinksOpen' : 'navLinksClose'}> */}
       <ul className="hidden md:flex justify-center items-center text-sm ">
         <li className="h-[60px] m-1 ">
           <a
@@ -50,7 +49,7 @@ function Navbar() {
       <ul
         className={
           isOpen
-            ? 'fixed top-[60px] pt-4 left-0 w-[70%] h-full bg-[black] border-r border-gray-dark text-sm ease-in-out duration-500 md:hidden'
+            ? 'fixed top-0 pt-4 left-0 w-[70%] h-full bg-[black] border-r border-gray-dark text-sm ease-in-out duration-500 md:hidden'
             : 'fixed left-[-100%]'
         }>
         <li className=" p-3 my-3 ">

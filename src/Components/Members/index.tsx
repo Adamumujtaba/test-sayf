@@ -11,7 +11,7 @@ function Members() {
           return (
             <div
               key={index}
-              className="bg-[#fff] mx-4 my-3 h-[500px] p-5 shadow-lg rounded-md w-[350px]">
+              className="bg-[#fff] mx-4 my-3 h-[500px] p-5 shadow-lg rounded-md md:w-[350px]">
               <img src={item.img} alt="img" className="h-[90%] w-full" />
               <div className="bg-[#00d094] text-center">
                 <p className="font-medium">{item.name}</p>
