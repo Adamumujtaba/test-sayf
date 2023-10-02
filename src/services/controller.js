@@ -4,9 +4,9 @@ import axios from 'axios';
 // export const baseUrl = import.meta.env.VITE_API_BASE_URL;
 // export const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
-// export const baseUrl = "https://sayf-new.fly.dev";
-export const baseUrl = 'http://localhost:3000';
-// const baseUrl = "https://sayf-new.fly.dev";
+export const baseUrl = 'https://sayf-new.fly.dev';
+// export const baseUrl = 'http://localhost:3000';
+// const baseUrl = 'https://sayf-new.fly.dev';
 
 export async function getAllUsers() {
   const response = await axios.get(`${baseUrl}/records`);
