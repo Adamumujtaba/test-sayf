@@ -1,7 +1,6 @@
 import { CheckCircleOutlined } from '@ant-design/icons';
 import Goals from '../../assets/goals.svg';
 import Task from '../../assets/task.svg';
-import styled from 'styled-components';
 import Members from '../../Components/Members';
 
 function Home() {

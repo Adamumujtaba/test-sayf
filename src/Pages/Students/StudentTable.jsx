@@ -3,8 +3,8 @@
 function StudentTable({ data }) {
   // const list = data?.filter((item) => item.employed === employed);
   return (
-    <table className="styled-table">
-      <thead>
+    <table className="w-[90vw] text-left text-gray-light">
+      <thead className="p-10 text-[#00d094]">
         <tr>
           <th>S/N</th>
           <th>Name</th>
@@ -14,10 +14,10 @@ function StudentTable({ data }) {
           <th>Employed</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody className="">
         {data.data?.map((item, index) => {
           return (
-            <tr key={item._id}>
+            <tr key={item._id} className="">
               <td>{++index}</td>
               <td>{item.fullname}</td>
               <td>{item.graduate ? 'Yes' : 'No'}</td>

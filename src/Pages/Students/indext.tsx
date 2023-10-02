@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import StudentTable from './StudentTable';
-import { StdContainer } from './student.style';
 import { Modal } from 'antd';
 import GradForm from '../../Components/Forms/GradForm';
 import Loader from '../../Components/Loader';
@@ -28,16 +27,16 @@ function Student() {
   }
 
   return (
-    <StdContainer>
-      <div className="student-header">
-        <button className="add" onClick={() => setIsModalOpen(true)}>
+    <div className="min-h-[80vh] p-5">
+      <div className="flex justify-end">
+        <button
+          className="shadow-xl bg-[#fff] p-1 w-[70px] rounded-lg"
+          onClick={() => setIsModalOpen(true)}>
           Add
         </button>
       </div>
-      <div className="student-main">
-        <div>
-          <StudentTable data={data} />
-        </div>
+      <div className="p-5 h-full">
+        <StudentTable data={data} />
       </div>
       <Modal
         title="Add new record"
@@ -46,7 +45,7 @@ function Student() {
         onCancel={() => setIsModalOpen(false)}>
         <GradForm setIsModalOpen={setIsModalOpen} />
       </Modal>
-    </StdContainer>
+    </div>
   );
 }
 
