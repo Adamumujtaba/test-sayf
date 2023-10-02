@@ -3,7 +3,6 @@ import StudentTable from './StudentTable';
 import { Modal } from 'antd';
 import GradForm from '../../Components/Forms/GradForm';
 import Loader from '../../Components/Loader';
-
 import { useStudentsQuery } from './student-api';
 
 function Student() {
@@ -30,12 +29,12 @@ function Student() {
     <div className="min-h-[80vh] p-5">
       <div className="flex justify-end">
         <button
-          className="shadow-xl bg-[#fff] p-1 w-[70px] rounded-lg"
+          className="shadow-xl bg-[#fff] px-0.5 mb-2 md:p-1 w-[70px] rounded-lg"
           onClick={() => setIsModalOpen(true)}>
           Add
         </button>
       </div>
-      <div className="p-5 h-full">
+      <div className=" h-full">
         <StudentTable data={data} />
       </div>
       <Modal
