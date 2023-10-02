@@ -70,7 +70,6 @@ function Committees() {
                     </button>
                     <button
                       onClick={() => {
-                        // deleteData(item._id, setIsModalOpen);
                         deleteCommittee(item._id);
                       }}
                       style={{ display: 'flex', justifyContent: 'center' }}>
@@ -103,12 +102,19 @@ function Committees() {
                     <p>{item.committee}</p>
                   </div>
                   <div className="btn">
-                    <button>Edit</button>
+                    <button
+                      onClick={() => {
+                        setIsModalOpen(true);
+                        setUpdate(item);
+                      }}>
+                      Edit
+                    </button>
                     <button
                       onClick={() => {
                         deleteCommittee(item._id);
-                      }}>
-                      Delete
+                      }}
+                      style={{ display: 'flex', justifyContent: 'center' }}>
+                      {isDeleting ? <Spin size="small" /> : 'Delete'}
                     </button>
                   </div>
                 </div>

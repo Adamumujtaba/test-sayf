@@ -8,9 +8,8 @@ function CommitteeUpdateForm({ initialValues, setIsModalOpen, isModalOpen }) {
   const [image, setImage] = useState(null);
 
   const [updateCommittee, { isLoading }] = useUpdateCommitteeMutation();
-  console.log(initialValues);
   const formik = useFormik({
-    initialValues: { initialValues },
+    initialValues: initialValues,
     // enableReinitialize: true,
     validateOnMount: !true,
     validationSchema: YUP.object({
@@ -45,15 +44,14 @@ function CommitteeUpdateForm({ initialValues, setIsModalOpen, isModalOpen }) {
     }
   };
 
-  // notification.success({
-  //   message: response.data.msg,
-  //   style: { marginTop: "40px" },
-  // });
   async function onSubmit() {
     // putData(formik.values, setIsModalOpen);
-    console.log(formik.values);
     updateCommittee(formik.values);
   }
+  console.log('Initial', initialValues);
+  console.log('F_V', formik.values);
+  console.log('F_In', formik.initialValues);
+
   return (
     <div>
       <header></header>
@@ -66,7 +64,7 @@ function CommitteeUpdateForm({ initialValues, setIsModalOpen, isModalOpen }) {
                   placeholder="Full name"
                   name="fullname"
                   type="text"
-                  value={formik.values.fullname}
+                  value={initialValues.fullname}
                   {...formik.getFieldProps('fullname')}
                 />
                 <p className="error">
@@ -82,7 +80,7 @@ function CommitteeUpdateForm({ initialValues, setIsModalOpen, isModalOpen }) {
                   id="committee"
                   name="committee"
                   onChange={formik.handleChange}
-                  value={formik.values.committee}>
+                  value={initialValues.committee}>
                   <option value={''}>Select Committee</option>
                   <option value={'financial'}>Financial</option>
                   <option value={'education'}>Education</option>
@@ -98,7 +96,7 @@ function CommitteeUpdateForm({ initialValues, setIsModalOpen, isModalOpen }) {
                   placeholder="Phone Number"
                   name="phone"
                   type="tel"
-                  value={formik.values.phone}
+                  value={initialValues.phone}
                   {...formik.getFieldProps('phone')}
                 />
                 <p className="error">
@@ -117,8 +115,8 @@ function CommitteeUpdateForm({ initialValues, setIsModalOpen, isModalOpen }) {
                   name="gender"
                   type="radio"
                   id="yes"
-                  value={true}
-                  // checked={initialValues.married === true}
+                  value={initialValues.gender}
+                  // checked={initialinitialValues.married === true}
                 />
                 <label htmlFor="yes">
                   <span style={{ fontSize: '1.1rem', padding: '2px' }}>
@@ -133,8 +131,8 @@ function CommitteeUpdateForm({ initialValues, setIsModalOpen, isModalOpen }) {
                   name="gender"
                   type="radio"
                   id="no"
-                  // checked={initialValues.married === false}
-                  value={false}
+                  // checked={initialinitialValues.married === false}
+                  value={formik.initialValues.gender}
                 />
                 <label htmlFor="no">
                   <span style={{ fontSize: '1.1rem', paddingLeft: '2px' }}>

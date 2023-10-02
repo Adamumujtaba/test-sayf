@@ -12,7 +12,7 @@ export interface Props {
 
 const CovertToFormData = (payload: Props) => {
   const formData = new FormData();
-  if (payload?.file) {
+  if (payload) {
     formData.append('file', payload?.file);
     formData.append('fullname', payload?.fullname);
     formData.append('gender', payload?.gender);
@@ -54,8 +54,8 @@ export const CommitteeApi = createApi({
     }),
     updateCommittee: builder.mutation({
       query: (data) => ({
-        url: `/committees${data._id}`,
-        method: 'patch',
+        url: `/committees/${data._id}`,
+        method: 'PATCH',
         body: CovertToFormData(data),
       }),
       invalidatesTags: ['committees'],

@@ -3,7 +3,7 @@ import { baseUrl } from '../../services/controller';
 import { notification } from 'antd';
 
 export interface Records {
-  name: string;
+  fullname: string;
   geo: string;
   phone: string;
   address: string;
@@ -14,9 +14,9 @@ export interface Records {
 const CovertToFormData = (payload: Records) => {
   console.log('DDDDD', payload);
   const formData = new FormData();
-  if (payload?.file) {
+  if (payload) {
     formData.append('file', payload?.file);
-    formData.append('fullname', payload?.name);
+    formData.append('fullname', payload?.fullname);
     formData.append('geo', payload?.geo);
     formData.append('phone', payload?.phone);
     formData.append('address', payload?.address);
@@ -61,14 +61,40 @@ export const visitApi = createApi({
         method: 'delete',
       }),
       invalidatesTags: ['visit'],
+      async onQueryStarted(_, { queryFulfilled: qf }) {
+        qf.then(() => {
+          notification.success({
+            message: 'Record Delete Successfully',
+            style: { marginTop: '45px' },
+          });
+        }).catch((error) => {
+          notification.error({
+            message: error.error.message,
+            style: { marginTop: '45px' },
+          });
+        });
+      },
     }),
     updateRecord: builder.mutation({
       query: (data) => ({
         url: `records/${data._id}`,
-        method: 'patch',
+        method: 'PATCH',
         body: CovertToFormData(data),
       }),
       invalidatesTags: ['visit'],
+      async onQueryStarted(_, { queryFulfilled: qf }) {
+        qf.then(() => {
+          notification.success({
+            message: 'Record Updated Successfully',
+            style: { marginTop: '45px' },
+          });
+        }).catch((error) => {
+          notification.error({
+            message: error.error.message,
+            style: { marginTop: '45px' },
+          });
+        });
+      },
     }),
   }),
 });

@@ -2,16 +2,16 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Modal, notification } from 'antd';
+import { Modal } from 'antd';
 import styled from 'styled-components';
 import { useDeleteRecordMutation, useUpdateRecordMutation } from './visit-api';
 import { LoadingOutlined } from '@ant-design/icons';
 
 function VisitedMembers({ records }) {
   const navigate = useNavigate();
-  const [deleteRecord, { isLoading, isError, isSuccess }] =
-    useDeleteRecordMutation();
-  const [updateRecord] = useUpdateRecordMutation();
+  const [deleteRecord, { isLoading }] = useDeleteRecordMutation();
+  const [updateRecord, { isSuccess, isLoading: isUpdating }] =
+    useUpdateRecordMutation();
   const findAndNavigate = (data) => {
     localStorage.setItem('currentRecord', JSON.stringify(data));
     navigate('/map');
@@ -47,20 +47,12 @@ function VisitedMembers({ records }) {
 
   useEffect(() => {
     if (isSuccess) {
-      notification.success({
-        message: 'Record Deleted Successfully',
-        style: { marginTop: '45px' },
-      });
+      setIsModalOpen(false);
     }
-    if (isError) {
-      notification.error({
-        message: 'Fail Delete',
-        style: { marginTop: '45px' },
-      });
-    }
-  }, [isSuccess, isError]);
+  }, [isSuccess]);
 
   const handleUpdate = (data) => {
+    console.log('Update', data);
     updateRecord(data);
   };
   const handleDelete = (id) => {
@@ -107,8 +99,7 @@ function VisitedMembers({ records }) {
               </div>
 
               <Modal
-                // title={isUpdating ? 'Updating...' : 'Update Record'}
-                title={'Updating...'}
+                title={isUpdating ? 'Updating...' : 'Update Record'}
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}>
@@ -150,8 +141,9 @@ function VisitedMembers({ records }) {
                   <input onChange={(e) => handleImageChange(e)} type="file" />
                   <input
                     type="submit"
-                    value="Update"
+                    value={`${isUpdating ? 'Updating... ' : 'Update'}   `}
                     onClick={() => handleUpdate(data)}
+                    disabled={isUpdating ? true : false}
                   />
                 </div>
               </Modal>

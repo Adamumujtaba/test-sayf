@@ -74,7 +74,7 @@ function Visit() {
         <div className="form">
           <input
             type="text"
-            onChange={(e) => setData({ ...data, name: e.target.value })}
+            onChange={(e) => setData({ ...data, fullname: e.target.value })}
             placeholder="Fullname"
           />
           <input
