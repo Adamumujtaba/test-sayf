@@ -25,7 +25,7 @@ function StudentTable({ data }) {
                 {new Date().getFullYear() - item?.dob?.toString().slice(0, 4)}
               </td>
               <td>{item.course}</td>
-              {/* <td>{item.employed ? "Employed": "Unemployed"}</td> */}
+              {/* <td>{item.employed ? 'Employed' : 'Unemployed'}</td> */}
               <td>{item.employed ? 'Yes' : 'No'}</td>
             </tr>
           );

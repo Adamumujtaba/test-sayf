@@ -1,4 +1,4 @@
-import { Empty, Modal } from 'antd';
+import { Modal } from 'antd';
 import { useEffect, useState } from 'react';
 import VisitedMembers from './VisitedMembers';
 import { useAddRecordMutation, useVisitRecordQuery } from './visit-api';
@@ -38,23 +38,26 @@ function Visit() {
     }
   }, [isSuccess]);
   return (
-    <div className="visit-container" style={{ minHeight: '70vh' }}>
-      <div className="header">
-        <h4>Family Members Visited</h4>
-        <p>
-          Total No: {records?.data?.length === 0 ? ' 0' : records?.data?.length}
-        </p>
-        <button onClick={() => setIsModalOpen(true)}>Add</button>
+    <div className="bg-gray-light min-h-[80vh]">
+      <div className="flex justify-between p-4">
+        <div>
+          <h4 className="font-bold text-lg">Family Members Visited</h4>
+          <p>
+            Total Number:{' '}
+            {records?.data?.length === 0 ? ' 0' : records?.data?.length}
+          </p>
+        </div>
+        <button
+          className="bg-[#00d094] w-[60px] h-8 rounded-md shadow-lg hover:shadow-none hover:text-[#fff]"
+          onClick={() => setIsModalOpen(true)}>
+          Add
+        </button>
       </div>
 
       {records?.data?.length === 0 ? (
-        <Empty
-          image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-          imageStyle={{
-            height: 60,
-          }}
-          description={<span>No data </span>}
-        />
+        <div className="flex items-center justify-center h-[500px] ">
+          <h2 className="text-center">No data</h2>
+        </div>
       ) : (
         <div>
           <VisitedMembers

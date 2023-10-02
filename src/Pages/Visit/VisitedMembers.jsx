@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Modal } from 'antd';
-import styled from 'styled-components';
 import { useDeleteRecordMutation, useUpdateRecordMutation } from './visit-api';
 import { LoadingOutlined } from '@ant-design/icons';
 
@@ -60,35 +59,41 @@ function VisitedMembers({ records }) {
   };
 
   return (
-    <Cont>
-      <div className="members">
+    <>
+      <div className=" grid gap-2 justify-center md:grid-cols-[repeat(auto-fill,minmax(360px,1fr))]">
         {records?.map((item) => {
           return (
             <React.Fragment key={item._id}>
-              <div className="card">
-                <div className="card-img">
+              <div className="bg-[#fff] mx-4 my-3 h-[500px] p-5 shadow-lg rounded-md md:w-[350px]">
+                <div className="h-[75%]">
                   <img
+                    className="h-[100%] w-full"
                     src={item.imgUrl}
                     alt="img"
-                    width={'100%'}
-                    height={'100%'}
                   />
                 </div>
-                <div className="card-info">
-                  <p>{item.fullname}</p>
+                <div className="bg-[#00d094] px-3 min-h-[25%] ">
+                  <p className="font-bold"> {item.fullname}</p>
                   <p>{item.phone}</p>
-                  <div className="btn">
+                  <p>
+                    {item.address} <small>{item.yr}</small>
+                  </p>
+                  <div className="pb-1 flex items-end  justify-between">
                     <button
+                      className="bg-gray-light shadow-lg w-[80px] rounded-sm"
                       onClick={() => {
                         setIsModalOpen(true);
                         setData(item);
                       }}>
                       Edit
                     </button>
-                    <button onClick={() => handleDelete(item._id)}>
+                    <button
+                      className="bg-gray-light shadow-lg w-[80px] rounded-sm"
+                      onClick={() => handleDelete(item._id)}>
                       {isLoading ? <LoadingOutlined /> : 'Delete'}
                     </button>
                     <button
+                      className="bg-gray-light shadow-lg w-[80px]  rounded-sm"
                       onClick={() => {
                         findAndNavigate(item);
                       }}>
@@ -151,91 +156,8 @@ function VisitedMembers({ records }) {
           );
         })}
       </div>
-    </Cont>
+    </>
   );
 }
 
 export default VisitedMembers;
-
-const Cont = styled.div`
-  .members-header {
-    /* background: red; */
-    text-align: center;
-    padding: 20px;
-    margin: 20px 10px;
-    border-bottom: 1px solid #45137f;
-    font-size: 1.4rem;
-    /* margin: 15px 0px; */
-  }
-  /* background: grey; */
-  .members {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
-  }
-  .card {
-    /* border: 1px solid #ccc; */
-    position: relative;
-    width: 330px;
-    height: 500px;
-    margin: 15px 10px;
-    background: #fff;
-    padding: 15px;
-    border-radius: 3px;
-    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-  }
-  .card-img {
-    border-radius: 1px;
-    height: 85%;
-  }
-  .card-img img {
-    border-radius: 4px;
-  }
-  .card-info {
-    /* background: red; */
-    height: 15%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .name {
-    font-weight: 600;
-    font-size: larger;
-  }
-  .title {
-    position: absolute;
-    right: 0px;
-    bottom: 0;
-    color: #fff;
-    /* background: #45137f; */
-    background: #03203c;
-    width: 140px;
-    text-align: center;
-    padding: 2px;
-    border-radius: 10px 0px 5px 0px;
-  }
-  .btn {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-  .btn button {
-    background: #000000;
-    color: #fff;
-    padding: 6px;
-    border: none;
-    border-radius: 4px;
-    width: 60px;
-    cursor: pointer;
-  }
-  .btn button:hover {
-    background: lightgray;
-    color: #000000;
-    border-radius: 0px;
-    transition: all 0.33s ease-in-out;
-    border: 1px solid #000000;
-  }
-`;
