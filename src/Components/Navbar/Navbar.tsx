@@ -1,5 +1,4 @@
 import { useState } from 'react';
-// import { Nav } from './nav.style';
 import { CloseOutlined, MenuOutlined } from '@ant-design/icons';
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);

@@ -8,17 +8,17 @@ function Home() {
     <div>
       <div className="bg-[#000] min-h-full text-gray-light p-4">
         <div className="flex items-center flex-col justify-center h-[50vh] ">
-          <p className="text-[#00d094] font-bold">Online Academy.</p>
+          <p className="text-[#00d094] font-bold text-xl">Online Academy.</p>
           <h2 className="text-2xl text-center font-boldtext-[#00d094] md:text-4xl  py-4 ">
             Sa'ad Ahmad Youth Foundation (SAYF){' '}
           </h2>
           {/* <button>Learn More</button> */}
-          {/* <p>
-              The SAYF Online Academy is designed to help students within the
-              family to bridge the wide gap between the traditional method of
-              learning (theoretical) and the practical application of the
-              knowledge to become industrious in the field of their studies.
-            </p> */}
+          <p className="text-center">
+            The SAYF Online Academy is designed to help students within the
+            family to bridge the wide gap between the traditional method of
+            learning (theoretical) and the practical application of the
+            knowledge to become industrious in the field of their studies.
+          </p>
         </div>
 
         <div className="max-w-[1240px] grid md:grid-cols-2 px-2 items-center">

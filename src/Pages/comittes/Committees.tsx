@@ -1,10 +1,7 @@
 import { useState } from 'react';
-import { CommitteeCon } from './committees.style';
 import CommitteeForm from '../../Components/Forms/CommitteeForm';
 import { Modal, Spin } from 'antd';
-// import useGetRecord from '../../hooks/useGetRecords';
 import CommitteeUpdateForm from '../../Components/Forms/CommitteeUpdateForm';
-// import useDelete from '../../hooks/useDelete';
 import { commiteePros } from '../../constant';
 import { useCommitteeQuery, useDeleteCommitteeMutation } from './Committee-api';
 
